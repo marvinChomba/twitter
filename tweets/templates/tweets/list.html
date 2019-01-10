@@ -1,0 +1,55 @@
+{% extends 'tweets/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block title%}Home{% endblock %}
+
+
+{% block content %}
+    <div class="tweets my-auto">
+        {% for tweet in tweets %}
+            <div class="tweet row pt-3 border-bottom border-black">
+                <div class="image col-1 mx-0">
+                    {% if request.user.profile.pic.cdn_url %}
+                    <img src="{{tweet.user.profile.pic.cdn_url}}" alt="" class="profile-image d-inline-block">
+                    {% else %}
+                    <img src="{% static 'images/user.png' %}" alt="" class="profile-image d-inline-block">
+                    {% endif %}
+                </div>
+                <div class="content col-9 text-left mx-0 pl-3">
+                    <a href="#">@<strong>{{tweet.user.username}}</strong></a>
+                    <small>{{tweet.pub_date|naturaltime}}</small>
+                    <p>{{tweet.content}}</p>
+                    <div class="extras">
+                        <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}'class="far fa-comment d-inline-block mx-2"></i>{{tweet.comments.all.count}}</a>
+                        <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}'class="fas fa-retweet d-inline-block mx-2"></i>{{tweet.retweets.all.count}}</a>
+                        <a value='{{tweet.id}}' onclick="like('{{tweet.id}}')" class="like mr-4 {% if request.user in tweet.likes.all %}liked{%endif%}"><i  class="like {% if request.user in tweet.likes.all %}fas{%else%}far{%endif%} fa-heart d-inline-block mx-2"></i>{{tweet.likes.all.count}}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}  
+
+{% block scripts %}
+{{block.super}}
+    <script>
+        let like = (id) => {
+            let btn = $(`a[value=${id}]`)
+            $.ajax({
+                "url":"/like/",
+                "type":"POST",
+                "data":{
+                    "id":parseInt(id),
+                    "csrfmiddlewaretoken":"{{csrf_token}}"
+                },
+                "dataType":"json",
+                "success":(res) => {
+                    $(btn).html(res["has_liked"] ? "<i class='far fa-heart d-inline-block mx-2'></i>" + res['count'] : "<i class='fas fa-heart d-inline-block mx-2'></i>" + res["count"])
+                    
+                }
+            })
+        }
+        
+    </script>
+{% endblock %}

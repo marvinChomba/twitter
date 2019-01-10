@@ -11,6 +11,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User,related_name='profile',on_delete=models.CASCADE)
     bio = models.CharField(max_length=30,default = "Hey there! I'm using twitter")
     pic = ImageField(blank=True,manual_crop="")
+    followers = models.ManyToManyField(User,related_name="followers")
+    following = models.ManyToManyField(User,related_name="following")
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -21,4 +23,7 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 
+
+    def __str__(self):
+        return "Profile for {}".format(self.user.username)
 

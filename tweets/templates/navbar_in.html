@@ -1,0 +1,31 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white mb-5">
+    <img src="{% static 'images/icon.png' %}" alt="" class="img-responsive nav-brand mr-5" height="25px" width="30px">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link mr-2" href="#"><span><i class="fa fa-home "></i></span> Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><span><i class="far fa-bell"></i></span> Notifications</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 mr-5">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <!-- <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button> -->
+        </form>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="#" class="nav-link"><img src="{{request.user.profile.pic.cdn_url}}" alt="" class="profile-image"></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link ml-5 btn btn-primary text-white mt-2">Tweet</a>
+            </li>
+        </ul>
+    </div>
+</nav>
