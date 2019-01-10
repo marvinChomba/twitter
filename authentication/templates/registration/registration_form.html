@@ -1,0 +1,27 @@
+{% extends 'registration/base.html' %}
+{% load bootstrap4 %}
+
+{% block title%}Register{% endblock %}
+
+{% block content %}
+<div class="row mt-5">
+    <div class="card col-xs-10 col-sm-9 col-md-5 m-auto  p-0">
+        <div class="card-header w-100">
+            <h4 class="text-center">Register</h4>
+        </div>
+        <div class="card-body">
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="form-group text-center">
+                    <input type="submit" value="Login" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <div class="card-footer w-100">
+            <p class="text-center">Login <a href="{% url 'login' %}">here</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
