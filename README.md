@@ -2,10 +2,10 @@
 A clone of twitter(desktop)
 
 ### User stories
-- [ ] I want to register and login into the site
+- [x] I want to register and login into the site
 - [ ] I can post a photo or a tweet
 - [ ] I can follow and be followed
-- [ ] I can like a tweet
+- [x] I can like a tweet
 - [ ] I only want to see the tweets of people I am following
 - [ ] I want to search for users,tweets and hashtags
 - [ ] I want to tweet tweets with a maximum of 140 characters
