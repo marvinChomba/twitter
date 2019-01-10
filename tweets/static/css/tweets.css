@@ -29,3 +29,8 @@ nav {
 span {
     cursor: pointer;
 }
+.profile-image-2 {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}

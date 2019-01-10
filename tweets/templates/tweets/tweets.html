@@ -1,0 +1,27 @@
+{% load static %}
+{% load humanize %}
+<div class="tweets my-auto pb-0">
+
+{% for tweet in tweets %}
+<div class="tweet row py-3 {% if not forloop.last %}border-bottom border-black{% endif %}">
+    <div class="image col-1 mr-2">
+        {% if request.user.profile.pic.cdn_url %}
+        <img src="{{tweet.user.profile.pic.cdn_url}}" alt="" class="profile-image d-inline-block">
+        {% else %}
+        <img src="{% static 'images/user.png' %}" alt="" class="profile-image d-inline-block">
+        {% endif %}
+    </div>
+    <div class="content col-9 text-left mx-0 pl-3">
+        <a href="{{tweet.user.get_absolute_url}}">@<strong>{{tweet.user.username}}</strong></a>
+        <small>{{tweet.pub_date|naturaltime}}</small>
+        <p>{{tweet.content}}</p>
+        <div class="extras">
+            <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="far fa-comment d-inline-block mx-2"></i>{{tweet.comments.all.count}}</a>
+            <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="fas fa-retweet d-inline-block mx-2"></i>{{tweet.retweets.all.count}}</a>
+            <a value='{{tweet.id}}' onclick="like('{{tweet.id}}')" class="like mr-4 {% if request.user in tweet.likes.all %}liked{%endif%}"><i
+                    class="like {% if request.user in tweet.likes.all %}fas{%else%}far{%endif%} fa-heart d-inline-block mx-2"></i>{{tweet.likes.all.count}}</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>

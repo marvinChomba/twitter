@@ -1,0 +1,41 @@
+{% extends 'tweets/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-3 text-center">
+            <div class="image">
+                <img src="{{user.profile.pic.cdn_url}}" alt="" class="profile-image-2">
+            </div>
+            <div class="info">
+                <h4 class='mb-4'>@{{user.username}}</h4>
+                <p>{{user.profile.bio}}</p>
+            </div>
+        </div>
+        <div class="col">
+            {% include 'tweets/tweets.html' with tweets=user.tweets.all %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{{block.super}}
+<script>
+    let like = (id) => {
+        let btn = $(`a[value=${id}]`)
+        $.ajax({
+            "url": "/like/",
+            "type": "POST",
+            "data": {
+                "id": parseInt(id),
+                "csrfmiddlewaretoken": "{{csrf_token}}"
+            },
+            "dataType": "json",
+            "success": (res) => {
+                $(btn).html(res["has_liked"] ? "<i class='far fa-heart d-inline-block mx-2'></i>" + res[
+                    'count'] : "<i class='fas fa-heart d-inline-block mx-2'></i>" + res["count"])
+
+            }
+        })
+    }
+</script>
+{% endblock %}
