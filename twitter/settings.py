@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # third-party
     'bootstrap4',
+    'pyuploadcare.dj'
 ]
 EMAIL_HOST = config("EMAIL_HOST")
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'twitter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,6 +80,11 @@ TEMPLATES = [
         },
     },
 ]
+
+UPLOADCARE = {
+    'pub_key': config("pub_key"),
+    'secret': config('secret'),
+}
 
 WSGI_APPLICATION = 'twitter.wsgi.application'
 
