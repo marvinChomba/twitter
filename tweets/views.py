@@ -6,7 +6,9 @@ import re
 # Create your views here.
 
 def home(request):
-    tweets = Tweet.objects.all()
+    ids = request.user.profile.following.all().values_list("id",flat=True)
+    print(ids)
+    tweets = Tweet.objects.filter(user_id__in = ids)
     tweets.select_related("user","comments").prefetch_related("likes","retweets","tags  ")
 
     context = {
