@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     # third-party
     'bootstrap4',
+    "widget_tweaks",
     'pyuploadcare.dj'
 ]
 EMAIL_HOST = config("EMAIL_HOST")

@@ -1,18 +1,37 @@
 {% extends 'tweets/base.html' %}
 {% load bootstrap4 %}
+{% load widget_tweaks %}
+
 
 {% block title %}Add Tweet{% endblock %}
 
 {% block content %}
+
     <div class="row">
         <div class="card col-5 p-0 m-auto">
             <div class="card-header">
                 <h4 class="text-center">Add a Tweet</h4>
             </div>
             <div class="card-body">
-                <form action="." method="post">
+                <form action="." method="post" class="form">
                     {% csrf_token %}
-                    {% bootstrap_form form %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <p class="alert alert-dismissable alert-danger">{{error}}
+                            <button type="button" class="close" data-dismiss="alert"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </p>
+                        {% endfor %}
+                        <div class="form-group">
+                            {{field.label_tag}}
+                            {% render_field field class="form-control" placeholder="Content" %}
+                        </div>
+                    {% endfor %}
+                    <small class="form-text text-muter" id="char-display">
+                        <span class="chars">0</span> <span class="character">characters</span>
+                    </small>
                     <div class="form-group text-center">
                         <input type="submit" value="Add" class="btn btn-primary">
                     </div>
@@ -20,4 +39,52 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{block.super}}
+    <script>
+        let textarea = document.getElementById("id_content")
+
+        let chars = 0
+
+        const charDisplay = document.getElementsByClassName("chars")[0]
+        const charText = document.getElementById("char-display")
+        textarea.addEventListener("keydown",(e) => {
+            if(e.keyCode > 32) {
+                chars = textarea.value.length + 1
+            
+                charDisplay.textContent = chars
+
+            } else if(e.keyCode === 8) {
+                if(textarea.value.length > 0) {
+                    chars = textarea.value.length - 1
+                }
+                charDisplay.textContent = chars
+            }
+
+            if(chars > 140) {
+                charText.style.color = "red"
+            } else {
+                charText.style.color = "black"
+            }
+
+            if(chars === 1) {
+                $(".character").text("character")
+            } else {
+                $(".character").text("characters")
+            }
+        })
+        textarea.addEventListener("paste",(e) => {
+            chars -= textarea.value.length + 1
+            if(chars > 0) {
+                charText.style.color = "black"
+            } else if(chars === 0) {
+                charText.style.color = "red"
+            }
+            charDisplay.textContent = chars
+
+        })
+
+    </script>
 {% endblock %}

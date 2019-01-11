@@ -1,18 +1,35 @@
 {% extends 'registration/base.html' %}
 {% load bootstrap4 %}
+{% load widget_tweaks %}
+
 
 {% block title%}Login{% endblock %}
 
 {% block content %}
     <div class="row mt-5">
-        <div class="card col-xs-10 col-sm-9 col-md-5 m-auto  p-0">
+        <div class="card col-xs-10 col-sm-9 col-md-4 m-auto  p-0">
             <div class="card-header w-100">
                 <h4 class="text-center">Login</h4>
             </div>
             <div class="card-body">
                 <form action="{% url 'login' %}" method="post">
                     {% csrf_token %}
-                    {% bootstrap_form form %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <p class="alert alert-dismissable alert-danger">{{error}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </p>    
+                        {% endfor %}
+                    <div class="form-group">
+                        {% if not forloop.last %}
+                        {% render_field field class="form-control mb-5" placeholder="username or email" %}
+                        {% else %}
+                        {% render_field field class="form-control" placeholder="password" %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                     <div class="form-group text-center">
                         <input type="submit" value="Login" class="btn btn-primary">
                     </div>
