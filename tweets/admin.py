@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Retweet)
 admin.site.register(Tweet)
 admin.site.register(Comment)
+admin.site.register(Tag)

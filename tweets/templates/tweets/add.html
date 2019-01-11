@@ -1,0 +1,23 @@
+{% extends 'tweets/base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}Add Tweet{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="card col-5 p-0 m-auto">
+            <div class="card-header">
+                <h4 class="text-center">Add a Tweet</h4>
+            </div>
+            <div class="card-body">
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="form-group text-center">
+                        <input type="submit" value="Add" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
