@@ -7,8 +7,10 @@ import re
 
 def home(request):
     ids = request.user.profile.following.all().values_list("id",flat=True)
+    user_ids = [id for id in ids]
+    user_ids.append(request.user.id)
     print(ids)
-    tweets = Tweet.objects.filter(user_id__in = ids)
+    tweets = Tweet.objects.filter(user_id__in = user_ids)
     tweets.select_related("user","comments").prefetch_related("likes","retweets","tags  ")
 
     context = {
