@@ -28,7 +28,8 @@ def like(request):
 
     data = {
         "has_liked":has_liked,
-        "count":tweet.likes.all().count()
+        "count":tweet.likes.all().count(),
+        "user_likes":request.user.likes.all().count()
     }
     return JsonResponse(data)
 

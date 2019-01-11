@@ -11,8 +11,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User,related_name='profile',on_delete=models.CASCADE)
     bio = models.CharField(max_length=30,default = "Hey there! I'm using twitter")
     pic = ImageField(blank=True,manual_crop="")
-    followers = models.ManyToManyField(User,related_name="followers")
-    following = models.ManyToManyField(User,related_name="following")
+    followers = models.ManyToManyField(User,related_name="followers",blank=True)
+    following = models.ManyToManyField(User,related_name="following",blank=True)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

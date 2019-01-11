@@ -3,15 +3,46 @@
 {% block content %}
     <div class="row">
         <div class="col-3 text-center">
-            <div class="image">
+            <div class="image mb-4">
                 <img src="{{user.profile.pic.cdn_url}}" alt="" class="profile-image-2">
             </div>
             <div class="info">
                 <h4 class='mb-4'>@{{user.username}}</h4>
                 <p>{{user.profile.bio}}</p>
             </div>
+            <div class="follow-section">
+                {% if request.user == user %}
+                    <a href="#" class="btn btn-primary">Edit Profile</a>
+                {% else %}
+                    {% if request.user in user.profile.followers.all %}
+                        <button onclick="follow('{{user.id}}')" class="follow btn btn-primary">Following</button>
+                    {% else %}
+                        <button onclick="follow('{{user.id}}')" class="follow btn btn-secondary">Follow</button>
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
         <div class="col">
+            <div class="user-details mb-5">
+                <table class="m-auto table" style="width:55% ">
+                    <thead class="thead">
+                        <tr class="">
+                            <th>Tweets</th>
+                            <th>Followers</th>
+                            <th>Following</th>
+                            <th>Likes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-light">
+                            <td>{{user.tweets.all.count}}</td>
+                            <td class="followers-count">{{user.profile.followers.all.count}}</td>
+                            <td>{{user.profile.following.all.count}}</td>
+                            <td class="likes">{{user.likes.all.count}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             {% include 'tweets/tweets.html' with tweets=user.tweets.all %}
         </div>
     </div>
@@ -33,7 +64,25 @@
             "success": (res) => {
                 $(btn).html(res["has_liked"] ? "<i class='far fa-heart d-inline-block mx-2'></i>" + res[
                     'count'] : "<i class='fas fa-heart d-inline-block mx-2'></i>" + res["count"])
-
+            }
+        })
+    }
+</script>
+<script>
+    let follow = (id) => {
+        $.ajax({
+            "url":"/auth/follow/user/",
+            "type":"POST",
+            "data": {
+                "id":parseInt(id),
+                "csrfmiddlewaretoken": "{{csrf_token}}"
+            },
+            "dataType":"json",
+            "success": (res) => {
+                $("button.follow").text(res["has_followed"] ? "Following" : "Follow")
+                $("button.follow").removeClass(res["has_followed"] ? "btn-secondary" : "btn-primary")
+                $("button.follow").addClass(!res["has_followed"] ? "btn-secondary" : "btn-primary")
+                $(".followers-count").text(res["count"])
             }
         })
     }

@@ -4,7 +4,7 @@ A clone of twitter(desktop)
 ### User stories
 - [x] I want to register and login into the site
 - [x] I can post a photo or a tweet
-- [ ] I can follow and be followed
+- [x] I can follow and be followed
 - [x] I can like a tweet
 - [x] I want to use tags for my posts
 - [ ] I only want to see the tweets of people I am following

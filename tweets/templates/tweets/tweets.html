@@ -5,7 +5,7 @@
 {% for tweet in tweets %}
 <div class="tweet row py-3 {% if not forloop.last %}border-bottom border-black{% endif %}">
     <div class="image col-1 mr-2">
-        {% if request.user.profile.pic.cdn_url %}
+        {% if tweet.user.profile.pic.cdn_url %}
         <img src="{{tweet.user.profile.pic.cdn_url}}" alt="" class="profile-image d-inline-block">
         {% else %}
         <img src="{% static 'images/user.png' %}" alt="" class="profile-image d-inline-block">
