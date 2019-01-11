@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Tweet
+from .models import Tweet,Tag
 from django.http import JsonResponse
 from .forms import TweetForm
+import re
 # Create your views here.
 
 def home(request):
@@ -37,7 +38,23 @@ def add_tweet(request):
         if form.is_valid():
             tweet = form.save(commit=False)
             tweet.user = request.user
+            tags = re.findall("#\w+",form.cleaned_data["content"])
+            print(tags)
+            tags_without_hash = [re.sub("#","",tag) for tag in tags if len(tag) > 1]
+            print(tags_without_hash)
+            content = re.sub("#\w+","",form.cleaned_data["content"])
+            tweet.content = re.sub("#","",content)
             tweet.save()
+            latest_tweet = Tweet.objects.first()
+            for tag in tags_without_hash:
+                db_tag,created = Tag.objects.get_or_create(name=tag.lower())
+                latest_tweet.tags.add(db_tag)
+
+            latest_tweet.save()
+            print(latest_tweet.tags.all())
+
+
+ 
             return redirect("home")
     else:
         form = TweetForm()

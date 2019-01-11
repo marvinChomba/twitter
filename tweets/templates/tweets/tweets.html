@@ -15,9 +15,11 @@
         <a href="{{tweet.user.get_absolute_url}}">@<strong>{{tweet.user.username}}</strong></a>
         <small>{{tweet.pub_date|naturaltime}}</small>
         <p>{{tweet.content}}
+            {% if tweet.tags.all %}
             {% for tag in tweet.tags.all %}
             <a href="#" class="tag">#{{tag.name}}</a>
             {% endfor %}
+            {% endif %}
         </p>
         <div class="extras">
             <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="far fa-comment d-inline-block mx-2"></i>{{tweet.comments.all.count}}</a>

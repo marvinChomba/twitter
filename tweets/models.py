@@ -18,6 +18,7 @@ class Tweet(models.Model):
     likes = models.ManyToManyField(User,related_name="likes",blank=True)
     pub_date = models.DateTimeField(auto_now_add=True,blank=True,null=True)
     tags = models.ManyToManyField(Tag,related_name = "tags",blank=True)
+    tags_helper = models.CharField(max_length = 400,blank=True)
 
     class Meta:
         ordering = ["-pub_date"]
