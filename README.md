@@ -3,6 +3,7 @@ A clone of twitter(desktop)
 
 ### User stories
 - [x] I want to register and login into the site
+- [ ] I want to login with either my username or my email
 - [x] I can post a photo or a tweet
 - [x] I can follow and be followed
 - [x] I can like a tweet
