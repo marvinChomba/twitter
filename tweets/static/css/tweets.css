@@ -23,6 +23,21 @@ nav {
 .fas.fa-heart {
     color: crimson;
 }
+.green {
+    color: rgb(118, 182, 22);
+}
+.primary,.btn-primary {
+    background-color: #1DA1F2;
+    outline-color: #1DA1F2;
+}
+.primary:hover,
+.btn-primary:hover {
+    background-color: #1DA1F2
+}
+
+.container {
+    margin-top: 100px;
+}
 .liked {
     color: crimson;
 }
@@ -35,5 +50,6 @@ span {
     border-radius: 50%;
 }
 .thead {
-    background: #007bff;
+    background-color: #1DA1F2;
+    color: #fff;
 }

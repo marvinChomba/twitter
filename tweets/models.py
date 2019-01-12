@@ -28,11 +28,10 @@ class Tweet(models.Model):
 
 class Retweet(models.Model):
     tweet = models.ForeignKey(Tweet,related_name="retweets",on_delete=models.CASCADE)
-    user = models.ForeignKey(User,related_name='retweets', on_delete=models.CASCADE)
-    time = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    user = models.ForeignKey(User,related_name = "retweets", on_delete = models.CASCADE)
+    pub_date = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    is_retweet = models.BooleanField(default = True)
 
-    class Meta:
-        ordering = ["-time"]
 
 class Comment(models.Model):
     content = models.TextField()
