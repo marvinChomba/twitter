@@ -26,6 +26,9 @@ nav {
 .green {
     color: rgb(118, 182, 22);
 }
+.home {
+    margin-top: 100px;
+}
 .primary,.btn-primary {
     background-color: #1DA1F2;
     outline-color: #1DA1F2;

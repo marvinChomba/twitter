@@ -31,6 +31,7 @@
                             <th>Followers</th>
                             <th>Following</th>
                             <th>Likes</th>
+                            <th>Retweets</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,11 +40,15 @@
                             <td class="followers-count">{{user.profile.followers.all.count}}</td>
                             <td>{{user.profile.following.all.count}}</td>
                             <td class="likes">{{user.likes.all.count}}</td>
+                            <td class="retweeter">{{user.retweets.all.count}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            {% include 'tweets/tweets.html' with tweets=user.tweets.all %}
+            <div class="mb-5">
+{% include 'tweets/tweets.html'%}
+
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -52,7 +57,7 @@
 {{block.super}}
 <script>
     let like = (id) => {
-        let btn = $(`a[value=${id}]`)
+        let btn = $(`a.like[value=${id}]`)
         $.ajax({
             "url": "/like/",
             "type": "POST",
@@ -83,6 +88,23 @@
                 $("button.follow").removeClass(res["has_followed"] ? "btn-secondary" : "btn-primary")
                 $("button.follow").addClass(!res["has_followed"] ? "btn-secondary" : "btn-primary")
                 $(".followers-count").text(res["count"])
+            }
+        })
+    }
+    let retweet = (id) => {
+        let btn = $(`a.retweet[value=${id}]`)
+        $.ajax({
+            "url":"/retweet/",
+            "type":"POST",
+            "data":{
+                "id":parseInt(id),
+                "csrfmiddlewaretoken":"{{csrf_token}}"
+            },
+            "dataType":"json",
+            "success": (res) => {
+                res['retweeted'] ? $("i." + id).addClass("green") : $("i." + id).removeClass("green");
+                $(`.retweet-count.${id}`).text(res["count"])
+                $(".retweeter").text(res["user_retweets"])
             }
         })
     }

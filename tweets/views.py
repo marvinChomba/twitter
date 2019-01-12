@@ -1,14 +1,22 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Tweet,Tag,Retweet
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from authentication.models import Profile
+from django.db.models import Count
 from .forms import TweetForm
 import re
+from django.contrib.auth.models import User
 # Create your views here.
 
+@login_required
 def home(request):
+    # to get the ids for the users the curent user is following
     ids = request.user.profile.following.all().values_list("id",flat=True)
     user_ids = [id for id in ids]
+    # add the id of the current user to include the tweets by the current user
     user_ids.append(request.user.id)
+    # get all the tweets and retweets and add them to one array
     tweets = Tweet.objects.filter(user_id__in = user_ids)
     retweets = Retweet.objects.filter(user__in = user_ids)
     all_tweets = []
@@ -16,12 +24,19 @@ def home(request):
         all_tweets.append(tweet)
     for tweet in retweets:
         all_tweets.append(tweet)
-
+    # sort all by pub_date
     all_tweets.sort(key=lambda u:u.pub_date,reverse = True)
+    # get related items to avoid multiple db queries
     tweets.select_related("user","comments").prefetch_related("likes","retweets","tags  ")
 
+    # users
+    users = Profile.objects.exclude(user_id = request.user.id)
+    users = users.annotate(count=Count("followers")).order_by("-count")
+    print(users)
+
     context = {
-        "tweets":all_tweets
+        "tweets":all_tweets,
+        "users": users
     }
 
     return render(request,"tweets/list.html",context)
@@ -86,6 +101,7 @@ def retweet(request):
 
     data = {
         "retweeted":retweeted,
-        "count": retweet.tweet.retweets.all().count()
+        "count": retweet.tweet.retweets.all().count(),
+        "user_retweets":request.user.retweets.all().count()
     }
     return JsonResponse(data)

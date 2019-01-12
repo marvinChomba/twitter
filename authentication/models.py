@@ -13,7 +13,8 @@ class Profile(models.Model):
     pic = ImageField(blank=True,manual_crop="")
     followers = models.ManyToManyField(User,related_name="followers",blank=True)
     following = models.ManyToManyField(User,related_name="following",blank=True)
-
+    followers_count = models.PositiveIntegerField(db_index = True,default=0)
+    
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:

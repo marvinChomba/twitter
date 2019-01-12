@@ -4,3 +4,6 @@ app_name = "auth"
 
 class AuthenticationConfig(AppConfig):
     name = 'authentication'
+
+    def ready(self):
+        import authentication.signals
