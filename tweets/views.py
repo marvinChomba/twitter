@@ -73,8 +73,8 @@ def add_tweet(request):
 
     return render(request,"tweets/add.html",{"form":form})
 
-def retweet(requst):
-    tweet_id = requst.POST.get("id")
+def retweet(request):
+    tweet_id = request.POST.get("id")
 
     retweet,created = Retweet.objects.get_or_create(tweet_id = tweet_id, user = request.user)
 

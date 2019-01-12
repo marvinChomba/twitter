@@ -33,14 +33,14 @@
         </p>
         <div class="extras">
             <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="far fa-comment d-inline-block mx-2"></i>{{tweet.comments.all.count}}</a>
-            <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="fas {% if tweet.id|has_retweeted:request.user.id %}green{% endif %} fa-retweet d-inline-block mx-2"></i>{{tweet.retweets.all.count}}</a>
+            <a style="cursor: pointer" class="mr-4 d-inline-block retweet" onclick="retweet('{{tweet.id}}')" value="{{tweet.id}}"><i class="{{tweet.id}} fas {% if tweet.id|has_retweeted:request.user.id %}green{% endif %} fa-retweet d-inline-block mx-2"></i><span class="retweet-count {{tweet.id}}">{{tweet.retweets.all.count}}</span></a>
             <a value='{{tweet.id}}' onclick="like('{{tweet.id}}')" class="like mr-4 {% if request.user in tweet.likes.all %}liked{%endif%}"><i
                     class="like {% if request.user in tweet.likes.all %}fas{%else%}far{%endif%} fa-heart d-inline-block mx-2"></i>{{tweet.likes.all.count}}</a>
         </div>
         {% else %}
             <small class="d-block">Retweeted by {{tweet.user}}</small>
             <a href="{{tweet.tweet.user.get_absolute_url}}">@<strong>{{tweet.tweet.user.username}}</strong></a>
-            <small>{{tweet.pub_date|naturaltime}}</small>
+            <small>{{tweet.tweet.pub_date|naturaltime}}</small>
             <p>{{tweet.tweet.content}}
                 {% if tweet.tweet.tags.all %}
                 {% for tag in tweet.tweet.tags.all %}
@@ -50,7 +50,7 @@
             </p>
             <div class="extras">
                 <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="far fa-comment d-inline-block mx-2"></i>{{tweet.tweet.comments.all.count}}</a>
-                <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="fas {% if tweet.tweet.id|has_retweeted:request.user.id %}green{% endif %} fa-retweet d-inline-block mx-2"></i>{{tweet.tweet.retweets.all.count}}</a>
+                <a style="cursor:pointer" class="mr-4 d-inline-block retweet" onclick="retweet('{{tweet.tweet.id}}')" value="{{tweet.tweet.id}}"><i class="{{tweet.tweet.id}} fas {% if tweet.tweet.id|has_retweeted:request.user.id %}green{% endif %} fa-retweet d-inline-block mx-2"></i><span class="retweet-count {{tweet.tweet.id}}">{{tweet.tweet.retweets.all.count}}</span></a>
                 <a value='{{tweet.tweet.id}}' onclick="like('{{tweet.tweet.id}}')" class="like mr-4 {% if request.user in tweet.tweet.likes.all %}liked{%endif%}"><i
                         class="like {% if request.user in tweet.tweet.likes.all %}fas{%else%}far{%endif%} fa-heart d-inline-block mx-2"></i>{{tweet.tweet.likes.all.count}}</a>
             </div>
