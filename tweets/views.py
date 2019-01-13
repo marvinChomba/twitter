@@ -30,9 +30,7 @@ def home(request):
     tweets.select_related("user","comments").prefetch_related("likes","retweets","tags  ")
 
     # users
-    users = Profile.objects.exclude(user_id = request.user.id)
-    users = users.annotate(count=Count("followers")).order_by("-count")
-    print(users)
+    users = Profile.objects.all().exclude(user_id = request.user.id).order_by("-followers_count")
 
     context = {
         "tweets":all_tweets,

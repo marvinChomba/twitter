@@ -6,8 +6,26 @@
 
 
 {% block content %}
-    <div class="mb-4">
-        {% include 'tweets/tweets.html' %}
+    <div class="row mx-5">
+        <div class="col-xs-12 col-sm-12 col-md-8">
+            <div class="tweets">
+                {% include 'tweets/tweets.html' %}
+            </div>
+        </div>
+        <div class="col recommendations">
+            <h3 class="text-center">Suggested Users</h3>
+            {% for profile in users %}
+                <div class="user row mb-3">
+                    <div class="col-2">
+                        <img src="{{profile.user.profile.pic.cdn_url}}" alt="" class="profile-image">
+                    </div>
+                    <div class="col">
+                        <p>{{profile.user.username}}</p>
+                        <a href="{{profile.user.get_absolute_url}}" class="btn btn-primary btn-sm">View Profile</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}  
 

@@ -1,8 +1,9 @@
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
-from .models import Profile
+from .models import Image
 
-@receiver(m2m_changed,sender=Profile.followers.through)
-def user_followers_changed(sender,instance,**kwargs):
-    instance.followers_count = instance.followers.count()
+
+@receiver(m2m_changed, sender=Image.users_likes.through)
+def users_like_changed(sender, instance, **kwargs):
+    instance.total_likes = instance.users_likes.count()
     instance.save()

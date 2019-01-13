@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from pyuploadcare.dj.models import ImageField
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,m2m_changed
 
 
 # Create your models here.
@@ -24,7 +24,14 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 
-
     def __str__(self):
         return "Profile for {}".format(self.user.username)
+
+@receiver(m2m_changed, sender=Profile.followers.through)
+def users_like_changed(sender, instance, **kwargs):
+    instance.followers_count= instance.followers.count()
+    instance.save()
+
+
+
 

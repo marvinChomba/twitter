@@ -1,19 +1,35 @@
+* {
+    font-family: Maven Pro;
+    margin: 0;
+    padding: 0
+}
 body {
     background: #eee;
 }
 .extras {
     display: flex;
 }
-
+/* .row {
+} */
 nav {
     box-shadow: 0 2px 2px -2px gray;
 }
-.tweets {
-    margin: 0 auto;
+.tweets,.recommendations {
+    /* margin: 0 auto; */
     border: 1px solid white;
-    width: 55%;
+    width: 100%;
     padding: 17px;
+    height: auto;
     background: white;
+    margin-bottom: 15px;
+}
+.profile-tweets {
+    border: 1px solid white;
+    width: 60%;
+    padding: 17px;
+    height: auto;
+    background: white;
+    margin: 0 auto 15px auto;
 }
 .profile-image {
     height: 40px;
@@ -55,4 +71,13 @@ span {
 .thead {
     background-color: #1DA1F2;
     color: #fff;
+}
+.recommendations {
+    height: 300px;
+}
+
+@media (max-width: 768px) {
+    .recommendations {
+        display: none;
+    }
 }
