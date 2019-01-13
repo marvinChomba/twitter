@@ -6,7 +6,7 @@ A clone of twitter(desktop)
 - [ ] I want to login with either my username or my email
 - [x] I can post a photo or a tweet
 - [x] I can follow and be followed
-- [ ] I want to see suggestions for users I can follow
+- [x] I want to see suggestions for users I can follow(users with the most followers)
 - [x] I can like a tweet
 - [x] I want to use tags for my posts
 - [x] I only want to see the tweets of people I am following
