@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tweet,Tag
+from .models import Tweet,Tag,Comment
 import re
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -13,6 +13,11 @@ class TweetForm(forms.ModelForm):
         if len(self.cleaned_data["content"]) > 140:
             raise forms.ValidationError("Maximum character length is 140 bro")
         return self.cleaned_data["content"]
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ("content",)
 
     
 

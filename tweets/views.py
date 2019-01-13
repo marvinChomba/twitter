@@ -1,16 +1,16 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Tweet,Tag,Retweet
+from .models import Tweet,Tag,Retweet,Comment
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from authentication.models import Profile
 from django.db.models import Count
-from .forms import TweetForm
+from .forms import TweetForm,CommentForm
 import re
 from django.contrib.auth.models import User
 # Create your views here.
 
 @login_required
-def home(request):
+def home(request,id = None):
     # to get the ids for the users the curent user is following
     ids = request.user.profile.following.all().values_list("id",flat=True)
     user_ids = [id for id in ids]
@@ -30,11 +30,15 @@ def home(request):
     tweets.select_related("user","comments").prefetch_related("likes","retweets","tags  ")
 
     # users
-    users = Profile.objects.all().exclude(user_id = request.user.id).order_by("-followers_count")
+    users = Profile.objects.all().exclude(user_id__in = user_ids).order_by("-followers_count")
+
+    form = CommentForm()
+
 
     context = {
         "tweets":all_tweets,
-        "users": users
+        "users": users,
+        "form":form
     }
 
     return render(request,"tweets/list.html",context)
@@ -103,3 +107,19 @@ def retweet(request):
         "user_retweets":request.user.retweets.all().count()
     }
     return JsonResponse(data)
+
+def add_comment(request):
+    user_id = int(request.POST.get("user_id"))
+    tweet_id = int(request.POST.get("tweet_id"))
+    tweet = Tweet.objects.get(id = tweet_id)
+    user = User.objects.get(id = user_id)
+
+    Comment.objects.create(content = request.POST.get("content"),user = user, tweet = tweet)
+
+    data = {
+        "count":tweet.comments.all().count(),
+        'status':'ok'
+    }
+    return JsonResponse(data)
+
+

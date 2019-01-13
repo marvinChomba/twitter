@@ -32,7 +32,7 @@
             {% endif %}
         </p>
         <div class="extras">
-            <a class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="far fa-comment d-inline-block mx-2"></i>{{tweet.comments.all.count}}</a>
+            <a onClick="showModal('{{tweet.user.get_absolute_url}}','{{tweet.user.username}}','{{tweet.pub_date|naturaltime}}','{{tweet.content}}','{{tweet.user.profile.pic.cdn_url}}','{{request.user.id}}','{{tweet.id}}')" class="mr-4 d-inline-block"><i data-id='{{tweet.id}}' class="far fa-comment d-inline-block mx-2"></i><span class="comments" id="{{tweet.id}}">{{tweet.comments.all.count}}</span></a>
             <a style="cursor: pointer" class="mr-4 d-inline-block retweet" onclick="retweet('{{tweet.id}}')" value="{{tweet.id}}"><i class="{{tweet.id}} fas {% if tweet.id|has_retweeted:request.user.id %}green{% endif %} fa-retweet d-inline-block mx-2"></i><span class="retweet-count {{tweet.id}}">{{tweet.retweets.all.count}}</span></a>
             <a value='{{tweet.id}}' onclick="like('{{tweet.id}}')" class="like mr-4 {% if request.user in tweet.likes.all %}liked{%endif%}"><i
                     class="like {% if request.user in tweet.likes.all %}fas{%else%}far{%endif%} fa-heart d-inline-block mx-2"></i>{{tweet.likes.all.count}}</a>

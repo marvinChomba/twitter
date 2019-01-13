@@ -6,6 +6,7 @@
 
 
 {% block content %}
+    {% include 'tweets/comment_modal.html' %}
     <div class="row mx-5">
         <div class="col-xs-12 col-sm-12 col-md-8">
             <div class="tweets">
@@ -15,7 +16,7 @@
         <div class="col recommendations">
             <h3 class="text-center">Suggested Users</h3>
             {% for profile in users %}
-                <div class="user row mb-3">
+                <div class="user row mb-4">
                     <div class="col-2">
                         <img src="{{profile.user.profile.pic.cdn_url}}" alt="" class="profile-image">
                     </div>
@@ -24,6 +25,8 @@
                         <a href="{{profile.user.get_absolute_url}}" class="btn btn-primary btn-sm">View Profile</a>
                     </div>
                 </div>
+            {% empty %}
+                <h5 class="text-center">There are no suggestions at the moment</h5>
             {% endfor %}
         </div>
     </div>
@@ -65,5 +68,40 @@
                 }
             })
         }
+        
+        let showModal = (href,user,date,content,image,user_id,tweet_id) => {
+            $(".tweet-href").attr("href",href)
+            $(".tweet-user").text(user)
+            $(".tweet-date").text(date)
+            $(".tweet-content").text(content)
+            $(".tweet-image").attr("src",image)
+            $(".user-id").text(user_id)
+            $(".user-id").text(user_id)
+            $(".tweet-id").text(tweet_id)
+            $("#myModal").modal("show")
+        }
+        
+        $(".comment-form").submit(e => {
+            e.preventDefault()
+            user_id = $(".user-id").text()
+            tweet_id = $(".tweet-id").text()
+            content = $('#id_content').val()
+            $.ajax({
+                "url": "/add/comment/",
+                "type":"POST",
+                "data": {
+                    "user_id":parseInt(user_id),
+                    "tweet_id":parseInt(tweet_id),
+                    "content":content,
+                    "csrfmiddlewaretoken":"{{csrf_token}}"
+                },
+                "dataType":'json',
+                "success": (res) => {
+                    $("#myModal").modal("hide")
+                    $("#id_content").val("")
+                    $(`.comments#${tweet_id}`).text(res["count"])
+                }   
+            })
+        })
     </script>
 {% endblock %}

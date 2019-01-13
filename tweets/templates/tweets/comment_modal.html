@@ -1,0 +1,42 @@
+{% load bootstrap4 %}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalTitle">Reply</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" class="user-id" style="position: relative;left: 100000px"></p>
+
+                <div class="modal-tweet">
+                    <div class="row">
+                        <div class="col-1 mr-2">
+                            <img src="" alt="" class="tweet-image profile-image d-inline-block">
+                        </div>
+                        <div class="col">
+                            <a class="tweet-href" href="">@<strong class='tweet-user'></strong></a>
+                            <small class="tweet-date"></small>
+                            <p class="tweet-content"></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-form">
+                    <form method="post" class="comment-form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input type="submit" value="Reply" class="btn btn-primary btn-sm">
+                    </form>
+                </div>
+            <input type="hidden" class="tweet-id" style="position: relative;left: 10000px"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
