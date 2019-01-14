@@ -10,7 +10,7 @@ A clone of twitter(desktop)
 - [x] I can like a tweet
 - [x] I want to use tags for my posts
 - [x] I only want to see the tweets of people I am following
-- [ ] I want to search for users,tweets and hashtags
+- [x] I want to search for users,tweets and hashtags
 - [x] I want to tweet tweets with a maximum of 140 characters
 - [x] I want to retweet a tweet
 - [x] I want to reply to a tweet
