@@ -1,4 +1,5 @@
 {% extends 'tweets/base.html' %}
+{% load humanize%}
 
 {% block content %}
 <div class="actions">
@@ -9,7 +10,8 @@
                 <img src="{{action.user.profile.pic.cdn_url}}" alt="" class="profile-image">
             </div>
             <div class="col">
-                <p>{{action.user.username}} {{action.action}} {{action.content_object}}</p>
+                <p><a href="{{action.user.get_absolute_url}}">{{action.user.username}}</a> {{action.action}} {{action.content_object|lower}}</p>
+                <small>{{action.time|naturaltime}}</small>
             </div>
         </div>
     </div>
