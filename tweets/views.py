@@ -5,8 +5,14 @@ from django.http import JsonResponse
 from authentication.models import Profile
 from django.db.models import Count
 from .forms import TweetForm,CommentForm
+from django.contrib import messages
 import re
 from django.contrib.auth.models import User
+from actions.models import Action
+from  actions.utils import add_action
+import datetime
+from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
 # Create your views here.
 
 @login_required
@@ -120,6 +126,11 @@ def add_comment(request):
         "count":tweet.comments.all().count(),
         'status':'ok'
     }
+    last_minute = timezone.now() - datetime.timedelta(seconds = 60)
+    content_type = ContentType.objects.get_for_model(Tweet)
+    similar_actions = Action.objects.filter(user = user, action = "commented on", object_id = tweet.id, content_type = content_type, time__gte = last_minute)
+    if not similar_actions:
+        Action.objects.create(user = user,content_object = tweet, action = "commented on")
     return JsonResponse(data)
 
 

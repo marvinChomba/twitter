@@ -22,10 +22,13 @@ def register(request):
 
     return render(request,"registration/registration_form.html",context)
 
-def profile(request,id):
-    user = User.objects.get(id = id)
-    tweets = Tweet.objects.filter(user = request.user)
-    rewtweets = Retweet.objects.filter(user = request.user)
+
+def profile(request,user_id):
+    # if user_id == request.id:
+        # return redirect("my_profile")
+    user = User.objects.get(id = user_id)
+    tweets = Tweet.objects.filter(user_id = user_id)
+    rewtweets = Retweet.objects.filter(user_id = user_id)
     all_tweets = []
     for tweet in tweets:
         all_tweets.append(tweet)

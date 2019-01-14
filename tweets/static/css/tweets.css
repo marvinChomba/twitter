@@ -7,7 +7,7 @@ a {
     cursor: pointer;
 }
 #id_content {
-    max-height: 100px;
+    max-height: 130px;
     resize: none;
 }
 body {
@@ -48,6 +48,10 @@ nav {
 }
 .green {
     color: rgb(118, 182, 22);
+}
+.tweet {
+    max-width: 100%;    
+    overflow: hidden;
 }
 .home {
     margin-top: 100px;

@@ -2,7 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.contrib.contenttypes.fields import GenericRelation
+from actions.models import Action
 # Create your models here.
 
 
@@ -16,6 +17,7 @@ class Tweet(models.Model):
     user = models.ForeignKey(User,related_name='tweets',on_delete=models.CASCADE)
     content = models.TextField()
     likes = models.ManyToManyField(User,related_name="likes",blank=True)
+    actions = GenericRelation(Action)
     pub_date = models.DateTimeField(auto_now_add=True,blank=True,null=True)
     tags = models.ManyToManyField(Tag,related_name = "tags",blank=True)
     tags_helper = models.CharField(max_length = 400,blank=True)
