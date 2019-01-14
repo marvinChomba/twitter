@@ -30,6 +30,16 @@ nav {
     background: white;
     margin-bottom: 15px;
 }
+.actions {
+    margin: 0 auto;
+    border: 1px solid white;
+    width: 60%;
+    padding: 17px;
+    padding-bottom: 0;
+    height: auto;
+    background: white;
+    margin-bottom: 15px;
+}
 .profile-tweets {
     border: 1px solid white;
     width: 60%;
@@ -49,10 +59,11 @@ nav {
 .green {
     color: rgb(118, 182, 22);
 }
-.tweet {
+.tweet,.action {
     max-width: 100%;    
     overflow: hidden;
 }
+
 .home {
     margin-top: 100px;
 }

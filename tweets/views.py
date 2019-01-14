@@ -65,6 +65,7 @@ def like(request):
         "count":tweet.likes.all().count(),
         "user_likes":request.user.likes.all().count()
     }
+    add_action(user = request.user,action = "liked a " ,target = tweet)
     return JsonResponse(data)
 
 def add_tweet(request):
@@ -112,6 +113,7 @@ def retweet(request):
         "count": retweet.tweet.retweets.all().count(),
         "user_retweets":request.user.retweets.all().count()
     }
+    add_action(user = request.user, action = "retweeted a tweet by " ,target = retweet.tweet.user)
     return JsonResponse(data)
 
 def add_comment(request):
@@ -126,11 +128,8 @@ def add_comment(request):
         "count":tweet.comments.all().count(),
         'status':'ok'
     }
-    last_minute = timezone.now() - datetime.timedelta(seconds = 60)
-    content_type = ContentType.objects.get_for_model(Tweet)
-    similar_actions = Action.objects.filter(user = user, action = "commented on", object_id = tweet.id, content_type = content_type, time__gte = last_minute)
-    if not similar_actions:
-        Action.objects.create(user = user,content_object = tweet, action = "commented on")
+
+    add_action(user = user ,target = tweet,action = "commented on" )
     return JsonResponse(data)
 
 

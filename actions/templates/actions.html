@@ -1,0 +1,18 @@
+{% extends 'tweets/base.html' %}
+
+{% block content %}
+<div class="actions">
+    {% for action in actions %}
+    <div class="action {%if not forloop.last%}border-bottom border-black mb-2{%endif%} pb-4">
+        <div class="row">
+            <div class="col-1">
+                <img src="{{action.user.profile.pic.cdn_url}}" alt="" class="profile-image">
+            </div>
+            <div class="col">
+                <p>{{action.user.username}} {{action.action}} {{action.content_object}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
