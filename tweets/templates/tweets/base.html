@@ -16,8 +16,9 @@
 </head>
 <body>
     {% if request.user.is_authenticated %}
-        {% include 'navbar_in.html' %}
+        {% include 'navbar/navbar_in.html' %}
     {% else %}
+        {% include 'navbar/navbar_out.html' %}
     {% endif %}
     <div class="container">
         {% block content %}

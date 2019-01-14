@@ -1,0 +1,52 @@
+{% extends 'tweets/base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <div id="tweets">
+        <h2 class="text-center">Tweets</h2>
+        {% for tweet in tweets %}
+            <div class="tweet">
+                <div class="row">
+                    <div class="col-1">
+                        <img src="{{tweet.user.profile.pic.cdn_url}}" alt="" class="profile-image">
+                    </div>
+                    <div class="col">
+                        <small>{{tweet.pub_date|naturaltime}}</small>
+                        <p>{{tweet.content}}
+                            {% if tweet.tags.all %}
+                            {% for tag in tweet.tags.all %}
+                            <a href="#" class="tag">#{{tag.name}}</a>
+                            {% endfor %}
+                            {% endif %}
+                        </p>
+                        </div>
+                </div>
+            </div>
+        {% empty%}
+            <h3 class="text-center">No tweets</h3>
+        {% endfor %}
+    </div>
+    <div id="users">
+        <h2 class="text-center">Users</h2>
+        {% for user in users %}
+            <div class="row">
+                <div class="col-4">
+                    <img src="{{user.profile.pic.cdn_url}}" alt="" class="profile-image">
+                </div>
+                <div class="col">
+                    <a href="{{user.get_absolute_url}}"><p>{{user.username}}</p></a>
+                </div>
+            </div>
+        {% empty %}
+            <h4 class="text-center">No users</h4>
+        {% endfor %}
+    </div>
+    <div id="tags">
+        <h2 class="text-center">Tags</h2>
+        {% for tag in tags %}
+            <p>{{tag.name}}</p>
+        {% empty%}
+            <h4 class="text-center">No tags</h4>
+        {% endfor %}
+    </div>
+{% endblock %}

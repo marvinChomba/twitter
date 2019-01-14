@@ -9,7 +9,8 @@ def notifications(request):
     actions = Action.objects.filter(user_id__in = user_ids).order_by("-time")
 
     context = {
-        "actions":actions
+        "actions":actions,
+        "section":"notifs"
     }
 
     return render(request,"actions.html",context)

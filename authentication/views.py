@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth.models import User
 from tweets.models import *
+from actions.utils import add_action
 
 # Create your views here.
 @login_required
@@ -57,6 +58,8 @@ def follow_user(request):
         "has_followed":has_followed,
         "count":user.profile.followers.all().count()
     }
+
+    add_action(user = request.user,target = user, action= "followed")
 
     return JsonResponse(data)
 

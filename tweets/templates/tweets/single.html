@@ -1,0 +1,16 @@
+{% extends 'tweets/base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <div class="actual-tweet">
+        <div class="row">
+            <div class="col-2">
+                <img src="{{tweet.profile.pic.cdn_url}}" alt="" class="profile-image">
+            </div>
+            <div class="col">
+                <small>{{tweet.pub_date|naturaltime}}</small>
+                <p>{{tweet.content}}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

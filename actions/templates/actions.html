@@ -10,11 +10,13 @@
                 <img src="{{action.user.profile.pic.cdn_url}}" alt="" class="profile-image">
             </div>
             <div class="col">
-                <p><a href="{{action.user.get_absolute_url}}">{{action.user.username}}</a> {{action.action}} {{action.content_object|lower}}</p>
+<p><a href="{{action.user.get_absolute_url}}">{{action.user.username}}</a> {{action.action}} <a href="{{action.content_object.get_absolute_url}}">{% if action.content_object == request.user%}you{% else %}{{action.content_object|lower}}{%endif%}</a></p>
                 <small>{{action.time|naturaltime}}</small>
             </div>
         </div>
     </div>
+    {% empty %}
+        <h5 class="text-center p-3">There are no notifs atm</h5>
     {% endfor %}
 </div>
 {% endblock %}

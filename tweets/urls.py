@@ -6,5 +6,7 @@ urlpatterns = [
     path("like/",views.like,name="like"),
     path("add/tweet/",views.add_tweet,name="add_tweet"),
     path("retweet/",views.retweet,name="retweet"),
-    path("add/comment/",views.add_comment,name="add_comment")
+    path("add/comment/",views.add_comment,name="add_comment"),
+    path("tweet/<int:tweet_id>/",views.single_tweet,name = "single_tweet"),
+    path("search/",views.search,name="search")
 ]

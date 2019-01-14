@@ -1,16 +1,22 @@
 {% load bootstrap4 %}
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>{% block title%}{% endblock %}</title>
     {% block styles %}
         {% bootstrap_css %}
+        {% static 'css/tweets.css' %}
 <link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
-    <div class="container">
+    {% if request.user.is_authenticated %}
+        {% include 'navbar/navbar_in.html' %}
+    {% else %}
+        {% include 'navbar/navbar_out.html' %}
+    {% endif %}
+    <div class="container" style="margin-top:100px;">
         {% block content %}
         {% endblock %}
     </div>

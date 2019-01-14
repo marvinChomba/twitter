@@ -60,8 +60,14 @@ nav {
     color: rgb(118, 182, 22);
 }
 .tweet,.action {
-    max-width: 100%;    
+    max-width: 100%;   
+    margin: 0;
+    padding: 0; 
     overflow: hidden;
+}
+.tweet:hover {
+    background: #eee;
+    cursor: pointer;
 }
 
 .home {

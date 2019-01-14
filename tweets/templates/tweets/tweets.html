@@ -4,7 +4,11 @@
 
 
 {% for tweet in tweets %}
-<div class="tweet row py-3 {% if not forloop.last %}border-bottom border-black{% endif %}">
+{% if not tweet.is_retweet%}
+<div onclick="single('{{tweet.id}}')" class="tweet row py-3 {% if not forloop.last %}border-bottom border-black{% endif %}" id="{{tweet.id}}">
+{% else %}
+<div onclick="single('{{tweet.tweet.id}}')" class="tweet row py-3 {% if not forloop.last %}border-bottom border-black{% endif %}"id="{{tweet.id}}">
+{% endif %}
     <div class="image col-1 mr-2">
         {% if tweet.is_retweet %}
             {% if tweet.tweet.user.profile.pic.cdn_url %}
@@ -58,3 +62,5 @@
     </div>
 </div>
 {% endfor %}
+
+
