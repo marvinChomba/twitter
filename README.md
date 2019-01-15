@@ -16,7 +16,8 @@ A clone of twitter(desktop)
 - [x] I want to reply to a tweet
 - [x] I want to see the activity of people I am following
 
-![home](https://user-images.githubusercontent.com/40211183/51189494-36f93f00-18f1-11e9-8227-380f831c0a3c.png)
+![screenshot from 2019-01-15 18-17-40](https://user-images.githubusercontent.com/40211183/51189824-e46c5280-18f1-11e9-9292-4b6fb0893001.png)
+
 
 ![my-profile](https://user-images.githubusercontent.com/40211183/51189536-4ed0c300-18f1-11e9-8be4-70074e45065b.png)
 
