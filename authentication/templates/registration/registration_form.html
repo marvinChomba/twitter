@@ -12,7 +12,8 @@
         <div class="card-body">
             <form action="{% url 'register' %}" method="post">
                 {% csrf_token %}
-                {% bootstrap_form form %}
+                {% bootstrap_form form1 %}
+                {% bootstrap_form form2 %}
                 <div class="form-group text-center">
                     <input type="submit" value="Login" class="btn btn-primary">
                 </div>

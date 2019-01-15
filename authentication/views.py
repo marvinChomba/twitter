@@ -4,21 +4,28 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth.models import User
 from tweets.models import *
+from .forms import RegForm
 from actions.utils import add_action
 
 # Create your views here.
-@login_required
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form1 = RegForm(request.POST)
+        form2 = UserCreationForm(request.POST)
+        if form1.is_valid() and form2.is_valid():
+            user = form2.save(commit = False)
+            user.first_name = form1.cleaned_data["first_name"]
+            user.last_name = form1.cleaned_data["last_name"]
+            user.email = form1.cleaned_data["email"]
+            user.save()
             return HttpResponse("Welcome")
     else:
-        form = UserCreationForm()
+        form1 = RegForm()
+        form2 = UserCreationForm()
 
     context = {
-        "form":form
+        "form1":form1,
+        'form2':form2
     }
 
     return render(request,"registration/registration_form.html",context)

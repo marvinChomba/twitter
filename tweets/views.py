@@ -41,7 +41,6 @@ def home(request,id = None):
 
     form = CommentForm()
 
-
     context = {
         "tweets":all_tweets,
         "users": users,
